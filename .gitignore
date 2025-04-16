@@ -1,4 +1,2 @@
-misc/
-./misc/
 .terraform/
 */terraform/.terraform.lock.hcl
