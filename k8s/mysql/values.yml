@@ -1,0 +1,8 @@
+auth:
+  rootPassword: root
+  username: petclinic
+  password: petclinic
+  database: petclinicdb
+primary:
+  persistence:
+    enabled: false  # local testing

@@ -1,0 +1,15 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: petclinic-dashboard
+  namespace: monitoring
+data:
+  petclinic-dashboard.json: |
+    {
+      "annotations": { "list": [] },
+      "panels": [],
+      "schemaVersion": 30,
+      "title": "Petclinic Dashboard",
+      "version": 1
+    }
