@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petclinic
+  template:
+    metadata:
+      labels:
+        app: petclinic
+    spec:
+      containers:
+        - name: petclinic
+          image: <tu-dockerhub-user>/petclinic:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql.petclinic.svc.cluster.local:3306/petclinicdb
+            - name: SPRING_DATASOURCE_USERNAME
+              value: petclinic
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: petclinic
