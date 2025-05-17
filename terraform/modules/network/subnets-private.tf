@@ -5,8 +5,9 @@ resource "aws_subnet" "petclinic-private-subnet-1a" {
   tags = merge(
     var.tags,
     {
-      Name                               = "${var.project_name}-private-subnet-1a"
-      "kubernetes.io/roles/internal-elb" = 1
+      Name                                        = "${var.project_name}-private-subnet-1a"
+      "kubernetes.io/role/internal-elb"           = 1
+      "kubernetes.io/cluster/cf-devops-cbateam-cluster" = "owned"
     }
   )
 }
@@ -19,8 +20,9 @@ resource "aws_subnet" "petclinic-private-subnet-1b" {
   tags = merge(
     var.tags,
     {
-      Name                               = "${var.project_name}-private-subnet-1b"
-      "kubernetes.io/roles/internal-elb" = 1
+      Name                                        = "${var.project_name}-private-subnet-1b"
+      "kubernetes.io/role/internal-elb"           = "1"
+      "kubernetes.io/cluster/cf-devops-cbateam-cluster" = "owned"
     }
   )
 }

@@ -6,9 +6,9 @@ resource "aws_subnet" "petclinic-public-subnet-1a" {
   tags = merge(
     var.tags,
     {
-      Name                                                 = "${var.project_name}-public-subnet-1a"
-      "kubernetes.io/role/elb"                            = "1"
-      "kubernetes.io/cluster/petclinic-monitoring-cluster" = "owned"
+      Name                                        = "${var.project_name}-public-subnet-1a"
+      "kubernetes.io/role/elb"                    = "1"
+      "kubernetes.io/cluster/cf-devops-cbateam-cluster" = "owned"
     }
   )
 }
@@ -22,9 +22,9 @@ resource "aws_subnet" "petclinic-public-subnet-1b" {
   tags = merge(
     var.tags,
     {
-      Name                                                 = "${var.project_name}-public-subnet-1b"
-      "kubernetes.io/role/elb"                            = "1"
-      "kubernetes.io/cluster/petclinic-monitoring-cluster" = "owned"
+      Name                                        = "${var.project_name}-public-subnet-1b"
+      "kubernetes.io/role/elb"                    = "1"
+      "kubernetes.io/cluster/cf-devops-cbateam-cluster" = "owned"
     }
   )
 }
