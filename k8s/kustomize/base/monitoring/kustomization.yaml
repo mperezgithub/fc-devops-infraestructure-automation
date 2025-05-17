@@ -1,6 +1,5 @@
 resources:
   - grafana.yaml
-  - jaeger.yaml
   - loki.yaml
   - otel-collector.yaml
   - prometheus.yaml
