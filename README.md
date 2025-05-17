@@ -151,12 +151,23 @@ docker-compose up -d --build
 
 ---
 
-## 🎯 Objetivos de Aprendizaje
+### 🚀 Desplegar PetClinic + Stack de Monitoreo (Kustomize)
 
-- ✅ Aplicar Terraform para Infraestructura Cloud
+```bash
+kubectl apply -k kustomize/overlays/dev
+```
+
+
+
+
+## 🎯 Objetivos de Aprendizaje
+- ✅ Comprender e implementar el enfoque DevOps completo
+- ✅ Aplicar Infraestructura como Código (IaC) con Terraform
 - ✅ Automatizar despliegues con GitOps & ArgoCD
 - ✅ Integrar Observabilidad con Grafana, Prometheus, Loki y Tempo
+- ✅ Diseñar y ejecutar pipelines de CI/CD con GitHub Actions
 - ✅ Crear un flujo CI/CD desde GitHub hasta EKS
+- ✅ Configurar entornos Kubernetes en AWS con Amazon EKS
 - ✅ Simular entorno cloud con Localstack y Kind
-
-
+- ✅ Desarrollar habilidades de monitoreo y observabilidad
+- ✅ Fomentar el trabajo colaborativo con buenas prácticas de documentación
