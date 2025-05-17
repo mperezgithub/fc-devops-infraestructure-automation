@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysqlserver
+  namespace: petclinic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysqlserver
+  template:
+    metadata:
+      labels:
+        app: mysqlserver
+    spec:
+      containers:
+      - name: mysqlserver
+        image: mysql:8
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: ""
+        - name: MYSQL_ALLOW_EMPTY_PASSWORD
+          value: "true"
+        - name: MYSQL_USER
+          value: "petclinic"
+        - name: MYSQL_PASSWORD
+          value: "petclinic"
+        - name: MYSQL_DATABASE
+          value: "petclinic"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "300m"
+          limits:
+            memory: "1Gi"
+            cpu: "600m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysqlserver
+  namespace: petclinic
+spec:
+  selector:
+    app: mysqlserver
+  ports:
+  - port: 3306
+    targetPort: 3306

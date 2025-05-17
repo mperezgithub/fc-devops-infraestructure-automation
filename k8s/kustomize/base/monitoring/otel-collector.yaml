@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otel-collector-config
+  namespace: monitoring
+data:
+  otel-collector-configmap.yaml: |
+    receivers:
+      jaeger:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:14250
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+    processors:
+      batch:
+        timeout: 5s
+    exporters:
+      otlp/jaeger:
+        endpoint: jaeger:4317
+        tls:
+          insecure: true    
+      otlp/tempo:
+        endpoint: tempo:4317
+        tls:
+          insecure: true  
+      prometheus:
+        endpoint: "0.0.0.0:8889"
+    service:
+      pipelines:
+        traces:
+          receivers: [jaeger, otlp]
+          processors: [batch]
+          exporters: [otlp/jaeger, otlp/tempo]
+        metrics:
+          receivers: [otlp]
+          exporters: [prometheus]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otel
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: otel
+  template:
+    metadata:
+      labels:
+        app: otel
+    spec:
+      containers:
+      - name: otel
+        image: otel/opentelemetry-collector-contrib:latest
+        args: ["--config=/etc/otel/config.yaml"]  # Configuración del archivo
+        ports:
+        - containerPort: 13133
+        - containerPort: 8888
+        - containerPort: 8889
+        volumeMounts:
+        - name: otel-config
+          mountPath: /etc/otel/config.yaml      # Montaje del archivo config
+          subPath: otel-collector-configmap.yaml  # Se usa del ConfigMap
+      volumes:
+      - name: otel-config
+        configMap:
+          name: otel-collector-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: otel
+  namespace: monitoring
+spec:
+  selector:
+    app: otel
+  ports:
+    - name: health-check
+      port: 13133
+      targetPort: 13133
+    - name: prometheus-metrics
+      port: 8888
+      targetPort: 8888
+    - name: prometheus-exporter
+      port: 8889
+      targetPort: 8889
+    - name: otlp-grpc
+      port: 4317
+      targetPort: 4317      
+

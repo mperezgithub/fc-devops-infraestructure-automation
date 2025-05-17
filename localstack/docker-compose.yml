@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    ports:
+      - "4566:4566"   # Edge port para servicios (Gateway unificado)
+      - "4510-4559:4510-4559"  # Internal service ports
+    environment:
+      - SERVICES=iam,ec2,eks,cloudformation,s3,autoscaling,sts,elbv2
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - EAGER_SERVICE_LOADING=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - AWS_DEFAULT_REGION=us-east-1
+    volumes:
+      - ./volume:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock

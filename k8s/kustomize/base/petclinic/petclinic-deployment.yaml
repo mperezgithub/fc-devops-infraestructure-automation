@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic
+  namespace: petclinic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petclinic
+  template:
+    metadata:
+      labels:
+        app: petclinic
+    spec:
+      nodeSelector:
+        role: petclinic
+      containers:
+      - name: petclinic
+        image: 739275443318.dkr.ecr.us-east-1.amazonaws.com/repoapps:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        - containerPort: 8000
+        - containerPort: 9464
+        env:
+        - name: PORT
+          value: "8080"
+        - name: MYSQL_URL
+          value: "jdbc:mysql://mysqlserver/petclinic"
+        - name: OTEL_TRACES_EXPORTER
+          value: "otlp"
+        - name: OTEL_METRICS_EXPORTER
+          value: "otlp"
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "http://otel.monitoring.svc.cluster.local:4317"
+        - name: OTEL_SERVICE_NAME
+          value: "petclinic-service"
+        - name: OTEL_RESOURCE_ATTRIBUTES
+          value: "service.name=petclinic-service"
+        - name: OTEL_EXPORTER_OTLP_PROTOCOL
+          value: "grpc"
+        - name: OTEL_TRACES_SAMPLER
+          value: "parentbased_always_on"
+        - name: MANAGEMENT_SERVER_PORT
+          value: "9464"
+        - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+          value: "prometheus,health,info,metrics"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "300m"
+          limits:
+            memory: "1Gi"
+            cpu: "600m"
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: petclinic
+  namespace: petclinic
+spec:
+  selector:
+    app: petclinic
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  - name: management
+    port: 9464
+    targetPort: 9464

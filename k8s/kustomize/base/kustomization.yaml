@@ -1,0 +1,11 @@
+resources:
+  - monitoring/
+  - petclinic/
+
+configMapGenerator:
+  - name: config
+    literals:
+      - KEY=VALUE
+
+generatorOptions:
+  disableNameSuffixHash: true
