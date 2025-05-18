@@ -12,10 +12,10 @@ El objetivo es automatizar la infraestructura de **PetClinic** en la nube, aplic
 ## 🗺️ Arquitectura General
 
 #### Light Mode
-![Pipeline y Cloud Infrastructure (Fondo Claro)](./docs/infraestructura-despliegue-team-cordoba-blanco.png)
+![Pipeline y Cloud Infrastructure (Fondo Claro)](./docs/diagramas-infraestructura/infra-teamCBA-cf-claro.png)
 
 #### Dark Mode
-![Pipeline y Cloud Infrastructure (Fondo Oscuro)](./docs/infraestructura-despliegue-team-cordoba-negro.png)
+![Pipeline y Cloud Infrastructure (Fondo Oscuro)](./docs/diagramas-infraestructura/infra-teamCBA-cf-oscuro.png)
 
 ### 🔄 Flujo CI/CD
 1. **GitHub Actions**: Testing (JUnit), Build (Maven), Static Analysis (SonarQube).
@@ -131,16 +131,6 @@ terraform init
 terraform apply
 ```
 
-### 🚀 Desplegar PetClinic (Helm + ArgoCD Sync)
-
-```bash
-helmfile apply -f k8s/helmfile.yaml
-```
-
-### 📊 Activar Stack de Monitoring
-
-```bash
-kubectl apply -f k8s/monitoring/
 ```
 
 ### 🔁 Pruebas Locales (Kind + Localstack)
