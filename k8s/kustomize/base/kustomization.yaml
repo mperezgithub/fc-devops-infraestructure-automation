@@ -1,6 +1,7 @@
 resources:
   - monitoring/
   - petclinic/
+  - argocd/
 
 configMapGenerator:
   - name: config

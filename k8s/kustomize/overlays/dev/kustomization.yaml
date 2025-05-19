@@ -1,4 +1,7 @@
 resources:
   - namespace.yaml
-  - ../../base
+  - ../../base/monitoring
+  - ../../base/petclinic
+  - ../../base/argocd
   - ingress.yaml
+  - argocd-app-petclinic.yaml
