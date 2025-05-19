@@ -21,7 +21,7 @@ spec:
         role: petclinic
       containers:
       - name: petclinic
-        image: 739275443318.dkr.ecr.us-east-1.amazonaws.com/repoapps:770d225
+        image: 739275443318.dkr.ecr.us-east-1.amazonaws.com/repoapps:af21d43
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
